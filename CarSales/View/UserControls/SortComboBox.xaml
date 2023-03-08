@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="CarSales.View.UserControls.SortComboBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarSales.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="250">
+    <Grid>
+        <StackPanel Margin="10">
+            <ComboBox SelectedIndex="0" >
+                <ComboBoxItem  >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/CarSales;component/Icons/up_arrow_icon.png" Width="20"/>
+                        <TextBlock Text="Price: Low-High" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ComboBoxItem>
+                <ComboBoxItem >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/CarSales;component/Icons/down_arrow_icon.png" Width="20"/>
+                        <TextBlock Text="Price: High-Low" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

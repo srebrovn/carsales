@@ -1,0 +1,90 @@
+﻿<Window x:Class="CarSales.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarSales"
+        xmlns:userControls="clr-namespace:CarSales.View.UserControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <userControls:MenuBar/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="25*"/>
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5">
+                <Label MaxHeight="40" MinHeight="30" Content="Search:" FontSize="16" FontStyle="Italic" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <userControls:SearchBox MinHeight="30" MaxHeight="40"  Width="200" MaxWidth="300"/>
+            </DockPanel>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <userControls:SortComboBox Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="45" MaxHeight="50" MaxWidth="250"/>
+                <ListView x:Name="lvAds" Grid.Row="1" Margin="5" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="False">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Background="#343A40" Grid.Row="0"  BorderBrush="Gray" BorderThickness="2" >
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label Foreground="WhiteSmoke" FontSize="16" FontStyle="Normal" Content="{Binding Brand}"/>
+                                        <Label Foreground="WhiteSmoke" FontSize="16" FontStyle="Normal" Content="{Binding Model}"/>
+                                    </StackPanel>
+                                </Border>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="/CarSales;component/Icons/car_icon.png" Grid.Column="0"
+                                       Width="250" Height="250" Margin="5,5,25,0" Stretch="UniformToFill"/>
+                                    <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,15,0,0">
+                                        <StackPanel Background="#F2F2F2" Orientation="Horizontal">
+                                            <Label FontSize="16" FontStyle="Normal" Content="Year: "/>
+                                            <Label FontSize="16" FontStyle="Normal" Content="{Binding ProductionYear}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label FontSize="16" FontStyle="Normal" Content="Mileage (KM): "/>
+                                            <Label FontSize="16" FontStyle="Normal" Content="{Binding Mileage}"/>
+                                        </StackPanel>
+                                        <StackPanel Background="#F2F2F2" Orientation="Horizontal">
+                                            <Label FontSize="16" FontStyle="Normal" Content="Fuel: "/>
+                                            <Label FontSize="16" FontStyle="Normal" Content="{Binding Fuel}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label FontSize="16" FontStyle="Normal" Content="Transmission: "/>
+                                            <Label FontSize="16" FontStyle="Normal" Content="{Binding Transmission}"/>
+                                        </StackPanel>
+                                        <StackPanel Background="#F2F2F2" Orientation="Horizontal">
+                                            <Label FontSize="16" FontStyle="Normal" Content="Engine (CC, Power(HP)): "/>
+                                            <Label Margin="0,0,10,0" FontSize="16" FontStyle="Normal" Content="{Binding EngineCapacity}"/>
+                                            <Label FontSize="16" FontStyle="Normal" Content="{Binding EnginePower}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
