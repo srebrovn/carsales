@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarSales.Models;
+using CarSales.View.UserControls;
+using CarSales.ViewModels;
 
 namespace CarSales
 {
@@ -20,26 +23,12 @@ namespace CarSales
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Ad> ads;
 
         public MainWindow()
         {
             InitializeComponent();
-            ads = new List<Ad>();
-            ads.Add(new Ad("Audi", "A5", 2019, 190000, "Diesel", "Automatic", 1989, 190, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida."));
-            ads.Add(new Ad("BMW", "3er", 2022, 50000, "Diesel", "Automatic", 1985, 150, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida."));
-            ads.Add(new Ad("BMW", "3er", 2022, 50000, "Diesel", "Automatic", 1985, 150, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida."));
-            ads.Add(new Ad("BMW", "3er", 2022, 50000, "Diesel", "Automatic", 1985, 150, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida."));
-            ads.Add(new Ad("BMW", "3er", 2022, 50000, "Diesel", "Automatic", 1985, 150, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida."));
-
-
-            lvAds.ItemsSource = ads;
-
+            wnd.DataContext = new ViewModel();
         }
-        public List<Ad> Ads { get; set; }
-        private void btnRun_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
     }
 }

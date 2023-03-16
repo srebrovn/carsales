@@ -17,16 +17,16 @@
             </Label>
         </Grid>
         <Menu Grid.Row="1" Background="#264C79" Foreground="GhostWhite">
-            <MenuItem Header="Datoteka" FontSize="16">
-                <MenuItem Header="Izhod"/>
+            <MenuItem Header="File" FontSize="16">
+                <MenuItem Foreground="Black" Header="Exit"/>
             </MenuItem>
-            <MenuItem Header="Oglasi" FontSize="16">
-                <MenuItem Header="Nastavitve"/>
+            <MenuItem Header="Ads" FontSize="16">
+                <MenuItem Foreground="Black" Header="Settings"/>
             </MenuItem>
-            <MenuItem Header="Orodja" FontSize="16">
-                <MenuItem Header="Dodaj"/>
-                <MenuItem Header="Odstrani"/>
-                <MenuItem Header="Uredi"/>
+            <MenuItem Header="Tools" FontSize="16">
+                <MenuItem Foreground="Black" Header="Add" Command="{Binding AddItemCommand}"/>
+                <MenuItem Foreground="Black" Header="Delete" Command="{Binding DeleteItemCommand}"/>
+                <MenuItem Foreground="Black" Header="Edit" Command="{Binding EditItemCommand}"/>
             </MenuItem>
         </Menu>
     </Grid>

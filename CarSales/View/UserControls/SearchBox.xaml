@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
-        <TextBox x:Name="txtInput" VerticalContentAlignment="Center" FontSize="16" FontFamily="Light" Margin="0,0,50,0" />
-        <Button x:Name="btnSearch" HorizontalAlignment="Right" Width="50" Background="Transparent">
-            <Image Source="/CarSales;component/Icons/search_icon.png" Margin="5"/>
+        <TextBox x:Name="txtInput" VerticalContentAlignment="Center" FontSize="16" FontFamily="Light" Margin="0,0,40,0" />
+        <Button x:Name="btnSearch" HorizontalAlignment="Right" Width="40" Background="Transparent">
+            <Image Source="/CarSales;component/Icons/search_icon.png"/>
         </Button>
     </Grid>
 </UserControl>

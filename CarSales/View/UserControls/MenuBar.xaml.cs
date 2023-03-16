@@ -24,5 +24,11 @@ namespace CarSales.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void MI_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
     }
 }

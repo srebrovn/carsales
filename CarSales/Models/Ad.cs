@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarSales
+namespace CarSales.Models
 {
     public class Ad : INotifyPropertyChanged
     {
@@ -173,7 +173,7 @@ namespace CarSales
             }
             set
             {
-                if ((value > 0) && (value < 10000))
+                if (value > 0 && value < 10000)
                 {
                     enginePower = value;
                 }
