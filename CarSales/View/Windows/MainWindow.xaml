@@ -6,7 +6,7 @@
         xmlns:userControls="clr-namespace:CarSales.View.UserControls"
         xmlns:local="clr-namespace:CarSales"
         mc:Ignorable="d"
-        Title="MainWindow" Name="wnd" MinWidth="1200" MinHeight="600" Height="800" Width="1200">
+        Title="MainWindow" Name="mainWindow" MinWidth="1200" MinHeight="600" Height="800" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -83,11 +83,8 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
-
                                 </Grid>
-
                             </Border>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

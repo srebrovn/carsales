@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarSales.Models
 {
@@ -13,14 +9,12 @@ namespace CarSales.Models
         private string model;
         private int productionYear;
         private int mileage;
-        //private short owners;
         private string fuel;
         private string transmission;
         private int engineCapacity;
         private int enginePower;
+        private int enginePowerKW;
         private string description;
-        //private int enginePowerKw;
-        //private int views;
         private string image = "";
 
         public Ad(string brand,
@@ -42,7 +36,7 @@ namespace CarSales.Models
             Transmission = transmission;
             EngineCapacity = engineCapacity;
             EnginePower = enginePower;
-            this.description = description;
+            Description = description;
         }
 
         public string Brand
@@ -113,7 +107,7 @@ namespace CarSales.Models
             }
             set
             {
-                if (value == "Diesel" || value == "Petrol" || value == "Electric" || value == "Hybrid")
+                if (value == "Diesel" || value == "Petrol" || value == "Electric" || value == "Hybrid (Petrol/Electric)" || value == "Hybrid (Diesel/Electric)")
                 {
                     fuel = value;
                 }
@@ -176,12 +170,24 @@ namespace CarSales.Models
                 if (value > 0 && value < 10000)
                 {
                     enginePower = value;
+                    EnginePowerKW = (int)(value * 0.7368); // From PS to KW.
                 }
                 else
                 {
                     enginePower = 1;
+                    enginePowerKW = 1;
                 }
                 NotifyPropertyChanged("EnginePower");
+                NotifyPropertyChanged("EnginePowerKW");
+            }
+        }
+
+        public int EnginePowerKW
+        {
+            get { return enginePowerKW; }
+            set
+            {
+                enginePowerKW = value;
             }
         }
 

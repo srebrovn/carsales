@@ -1,0 +1,33 @@
+﻿<Window x:Class="CarSales.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarSales"
+        mc:Ignorable="d"
+        Title="SettingsWindow" Name="settingsWindow" Height="400" Width="400"
+        ResizeMode="NoResize">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Brands">
+                <Grid >
+                    <StackPanel Width="250" HorizontalAlignment="Center">
+
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Button x:Name="btnAddBrand" Command="{Binding AddBrandCommand}" Width="50" Height="20" Margin="5">Add</Button>
+                            <Button x:Name="btnEditBrand" Command="{Binding EditBrandCommand}" Width="50" Height="20" Margin="5">Edit</Button>
+                            <Button x:Name="btnDeleteBrand" Command="{Binding DeleteBrandCommand}" Width="50" Height="20" Margin="5">Delete</Button>
+                        </StackPanel>
+                        <TextBox Text="{Binding InputBrandSettings}" x:Name="tbBrand" Margin="5" >
+                            
+                        </TextBox>
+                        <ListView ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrandSettings}" x:Name="lvBrands" Margin="5" HorizontalContentAlignment="Center">
+                            
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="AutoSave"/>
+        </TabControl>
+    </Grid>
+</Window>

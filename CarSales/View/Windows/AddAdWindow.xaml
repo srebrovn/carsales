@@ -1,0 +1,153 @@
+﻿<Window x:Class="CarSales.View.Windows.AddAdWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:CarSales.View.Windows"
+        mc:Ignorable="d"
+        Title="AddAdWindow" Height="700" Width="500"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Direct-Sale" FontSize="20" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+            <Label x:Name="tbError" Content="Error" Margin = "0 30 0 0" FontSize="14" Foreground="DarkRed" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+            <StackPanel Grid.Column="0" Margin="5 40 5 5">
+                <Label Content="Brand:" FontSize="16" />
+                <ComboBox x:Name="cmbBrands"
+                          ItemsSource="{Binding Brands}"
+                          SelectedItem="{Binding BrandAdd}"
+                          Height="25"
+                          Width="220"
+                          Margin="5 0 0 0"
+                          HorizontalAlignment="Left"
+                          FontSize="14"
+                          IsEditable="False"/>
+
+                <Label Content="Model:"
+                       Margin="0 10 0 0"
+                       FontSize="16"/>
+                <TextBox x:Name="tbModel"
+                         Text="{Binding ModelAdd, UpdateSourceTrigger=LostFocus}"
+                         Height="25"
+                         Width="220"
+                         Margin="5 0 0 0"
+                         FontSize="14"
+                         VerticalContentAlignment="Center"
+                         HorizontalAlignment="Left"/>
+                
+                <Label Content="Production Year:"
+                       Margin="0 10 0 0"
+                       FontSize="16"/>
+                <ComboBox x:Name="cmbYear"
+                          ItemsSource="{Binding Years}"
+                          SelectedItem="{Binding YearAdd, UpdateSourceTrigger=PropertyChanged}"
+                          Height="25"
+                          Width="220"
+                          MaxDropDownHeight="150"
+                          Margin="5 0 0 0"
+                          FontSize="14"
+                          HorizontalAlignment="Left"
+                          />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="5 0 0 0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" >
+                <Label Content="Mileage:"
+                    Margin="0 10 0 0"
+                    FontSize="16"/>
+                <TextBox x:Name="tbMileage"
+                        Text="{Binding MileageAdd, UpdateSourceTrigger=LostFocus}"
+                        Height="25"
+                        Width="220"
+                        Margin="5 0 0 0"
+                        FontSize="14" 
+                        MaxLength="7"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Left"/>
+                <Label Content="Fuel:"
+                    Margin="0 10 0 0"
+                    FontSize="16"/>
+                <ComboBox x:Name="cmbFuel"
+                         Text="{Binding FuelAdd}"
+                         SelectedItem="{Binding FuelAdd, UpdateSourceTrigger=LostFocus}"
+                         SelectedValuePath="content"
+                         Height="25"
+                         Width="220"
+                         Margin="5 0 0 0"
+                         FontSize="14"
+                         VerticalContentAlignment="Center"
+                         HorizontalAlignment="Left">
+                    <ComboBoxItem Content="Diesel"/>
+                    <ComboBoxItem Content="Petrol"/>
+                    <ComboBoxItem Content="Hybrid (Petrol/Electric)"/>
+                    <ComboBoxItem Content="Hybrid (Diesel/Electric)"/>
+                    <ComboBoxItem Content="Electric"/>
+                </ComboBox>
+                <Label Content="Capacity (cc):"
+                       Margin="0 10 0 0"
+                       FontSize="16"/>
+                <TextBox x:Name="tbCapacity"
+                        Text="{Binding CapacityAdd, UpdateSourceTrigger=LostFocus}"
+                        Height="25"
+                        Width="220"
+                        Margin="5 0 0 0"
+                        FontSize="14"
+                        MaxLength="5"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="0" >
+                <Label Content="Transmission:"
+                    Margin="0 10 0 0"
+                    FontSize="16"/>
+                <ComboBox x:Name="cmbTransmission"
+                        Text="{Binding TransmissionAdd}"
+                        SelectedItem="{Binding TransmissionAdd, UpdateSourceTrigger=LostFocus}"
+                        SelectedValuePath="content"
+                        Height="25"
+                        Width="220"
+                        Margin="5 0 0 0"
+                        FontSize="14"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Left">
+                    <ComboBoxItem Content="Automatic"/>
+                    <ComboBoxItem Content="Manual"/>
+                </ComboBox>
+                <Label Content="Power (PS):"
+                    Margin="0 10 0 0"
+                    FontSize="16"/>
+                <TextBox x:Name="tbPower"
+                        Text="{Binding PowerAdd, UpdateSourceTrigger=LostFocus}"
+                        Height="25"
+                        Width="220"
+                        Margin="5 0 0 0"
+                        FontSize="14"
+                        MaxLength="4"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Left"
+                         />
+            </StackPanel>
+            
+            <Label  Grid.Column="0" Grid.Row="1"  Content="Description:" FontSize="16" Margin="5 5 0 0"/>
+            <TextBox  Grid.Column="0" Grid.Row="1" Text="{Binding DescriptionAdd}" Height="80" MinHeight="50" Margin="10 40 25 0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <Button Grid.Column="0" Grid.Row="1" Content="{Binding AddEditBtn}" Command="{Binding AddEditAdCommand}" IsEnabled="{Binding CanCreate}" Height="30" Margin="10 0 25 25" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+        </Grid>
+    </Grid>
+</Window>

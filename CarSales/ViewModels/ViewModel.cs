@@ -1,21 +1,22 @@
 ﻿using CarSales.Commands;
 using CarSales.Models;
-using CarSales.View.UserControls;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+using System;
+using System.Linq;
+using CarSales.View.Windows;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace CarSales.ViewModels
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        private readonly ErrorsViewModel errorsViewModel;
 
         private void NotifyPropertyChanged(string Name)
         {
@@ -25,52 +26,322 @@ namespace CarSales.ViewModels
             }
         }
 
-        public ObservableCollection<Ad>? ads;
+        public bool CanCreate => !HasErrors;
+        public bool HasErrors => errorsViewModel.HasErrors;
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return errorsViewModel.GetErrors(propertyName);
+        }
+
+        private List<string> years; // Years for adding new AD.
+        private ObservableCollection<Ad>? ads; // All ADs.
+        private ObservableCollection<string> brands; // Brands available
+        private Ad currentlySelectedAd; // Currently selected AD from ListView.
+
+        // Main Window
+
+        private readonly Window mainWindow;
+
+        // Settings Window
+        private string selectedBrandSettings; // Selected Brand in Settings Window. 
+        private string inputBrandSettings; // Brand to be inserted into brands from Settings Window.
+
+        // AddAdWindow
+        AddAdWindow addAdWindow;
+
+        private string addEditBtn;
+
+        private string errorMessage;
+        private string brandAdd;
+        private string modelAdd;
+        private string yearAdd;
+        private string mileageAdd;
+        private string fuelAdd;
+        private string capacityAdd;
+        private string transmissionAdd;
+        private string powerAdd;
+        private string descriptionAdd;
+
+        // EditAdWindow
+        AddAdWindow editAdWindow;
+
+        // COMMANDS
+        public AddCommand? AddEditAdCommand { get; set; }
+        public DeleteCommand? DeleteAdCommand { get; set; }
+        public OpenWindowCommand? OpenSettingsWindowCommand{ get; set; }   
+        public OpenWindowCommand OpenAddWindowCommand { get; set; }
+        public OpenWindowCommand OpenEditWindowCommand { get; set; }
+        public AddCommand? AddBrandCommand { get; set; }
+        public DeleteCommand? DeleteBrandCommand { get ; set; } 
+        public EditCommand? EditBrandCommand { get; set; }  
+
+        public ViewModel(Window window)
+        {
+
+            this.mainWindow = window;
+
+            errorsViewModel = new ErrorsViewModel();
+            errorsViewModel.ErrorsChanged += ErrorsViewModel_ErrorsChanged;
+
+            // CRUD Commands
+            AddEditAdCommand = new AddCommand(AddEditAd);
+            DeleteAdCommand = new DeleteCommand(DeleteAd);
+
+            AddBrandCommand = new AddCommand(AddBrand);
+            DeleteBrandCommand = new DeleteCommand(DeleteBrand);
+            EditBrandCommand = new EditCommand(EditBrand);
+
+            // Window Commands
+            OpenSettingsWindowCommand = new OpenWindowCommand(OpenSettingsWindow);
+            OpenAddWindowCommand = new OpenWindowCommand(OpenAddWindow);
+            OpenEditWindowCommand = new OpenWindowCommand(OpenEditWindow);
+
+            Ads = new ObservableCollection<Ad>();
+            Brands = new ObservableCollection<string>();
+            Years = new List<string>();
+
+            fillBrandsFromSettings();
+            
+        }
+
+        // Errors
+        private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+            NotifyPropertyChanged(nameof(CanCreate));
+        }
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set { errorMessage = value; }
+        }
+
+        // Global
+        public List<string> Years { get { return years; } set { years = value; } }
+
+        private void clearFields()
+        {
+            
+            BrandAdd = null;
+            ModelAdd = null;
+            YearAdd = null;
+            MileageAdd = null;
+            FuelAdd = null;
+            CapacityAdd = null;
+            TransmissionAdd = null;
+            PowerAdd = null;
+            DescriptionAdd = null;
+        }
+
+        // MainWindow
         public ObservableCollection<Ad> Ads
         {
             get { return ads; }
             set { ads = value; }
         }
 
-        private Ad currentlySelectedAd;
         public Ad CurrentlySelected
         {
             get { return currentlySelectedAd; }
             set
-            { 
-               
+            {
                 currentlySelectedAd = value;
+                BrandAdd = currentlySelectedAd.Brand;
+                ModelAdd = currentlySelectedAd.Model;
+                YearAdd = (currentlySelectedAd.ProductionYear).ToString();
+                MileageAdd = currentlySelectedAd.Mileage.ToString();
+                FuelAdd = currentlySelectedAd.Fuel;
+                CapacityAdd = currentlySelectedAd.EngineCapacity.ToString();
+                TransmissionAdd = currentlySelectedAd.Transmission;
+                PowerAdd = currentlySelectedAd.EnginePower.ToString();
+                DescriptionAdd = currentlySelectedAd.Description;
                 NotifyPropertyChanged("CurrentlySelected");
-                
             }
         }
-        public AddCommand? AddItemCommand { get; set; }
-        public DeleteCommand? DeleteItemCommand { get; set; }
-        public EditCommand? EditItemCommand { get; set; }
 
-        public ViewModel()
+        // Settings Window
+        private void OpenSettingsWindow()
         {
-            AddItemCommand = new AddCommand(AddAd);
-            DeleteItemCommand = new DeleteCommand(DeleteAd);
-            EditItemCommand = new EditCommand(EditAd);
-            Ads = new ObservableCollection<Ad>
-            {
-                new Ad("Audi", "A5", 2019, 190000, "Diesel", "Automatic", 1989, 190, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida."),
-                new Ad("BMW", "3er", 2022, 50000, "Diesel", "Automatic", 1985, 150, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu justo a purus egestas vehicula et a odio. Aliquam a magna ac nibh malesuada rutrum. Aenean sollicitudin maximus est tempus gravida.")
-               
-            };
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.DataContext = this;
             
+            settingsWindow.Show();
+        }
+        private void fillBrandsFromSettings()
+        {
+            string val = Properties.Settings.Default.Brands;
+
+            string[] list = val.Split(',').Select(s => s).ToArray();
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i].Length > 0)
+                {
+                    Brands.Add(list[i]);
+                }
+            }
         }
 
-        public void AddAd()
+        private void editBrandSettings()
         {
-            if (currentlySelectedAd != null)
+            string val = String.Join(",", Brands.Select(i => i).ToArray());
+            Properties.Settings.Default.Brands = val;
+            Properties.Settings.Default.Save();
+        }
+
+        public void AddBrand()
+        {
+            if (InputBrandSettings != null)
             {
-                Ads.Add(currentlySelectedAd);
+                if (InputBrandSettings.Length > 0 && !Brands.Contains(InputBrandSettings))
+                {
+                    Brands.Add(InputBrandSettings);
+                    editBrandSettings();
+                }
             }
-            else
+        }
+
+        public void DeleteBrand()
+        {
+            if (SelectedBrandSettings != null && Brands.Contains(SelectedBrandSettings))
             {
-                MessageBox.Show("Please select an item!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                Brands.Remove(SelectedBrandSettings);
+                editBrandSettings();
+            }
+
+        }
+
+        public void EditBrand()
+        {
+            if (SelectedBrandSettings != null && InputBrandSettings != null)
+            {
+                if (Brands.Contains(SelectedBrandSettings) && !Brands.Contains(InputBrandSettings))
+                {
+                    for (int i = 0; i < Brands.Count; i++)
+                    {
+                        if (SelectedBrandSettings == Brands[i])
+                        {
+                            Brands[i] = InputBrandSettings;
+                            editBrandSettings();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public ObservableCollection<string> Brands
+        {
+            get { return brands; }
+            set
+            {
+                brands = value;
+                NotifyPropertyChanged("Brands");
+            }
+        }
+
+        
+        public string SelectedBrandSettings
+        {
+            get { return selectedBrandSettings; }
+            set
+            {
+                if (!string.Equals(selectedBrandSettings, value))
+                {
+                    selectedBrandSettings = value;
+                    NotifyPropertyChanged("SelectedBrandSettings");
+                }
+            }
+        }
+
+        public string InputBrandSettings
+        {
+            get { return inputBrandSettings; }
+            set
+            {
+                if (value != null)
+                {
+                    if (!string.Equals(inputBrandSettings, value))
+                    {
+                        inputBrandSettings = value;
+                    }
+                }
+                else
+                {
+                    inputBrandSettings = "";
+                }
+                NotifyPropertyChanged("InputBrandSettings");
+            }
+        }
+
+        // Add Ad Window
+        private void OpenAddWindow()
+        {
+            if (editAdWindow == null)
+            {
+                fillYears(); // Fill years for Combo Box Items.
+                clearFields();
+                AddEditBtn = "Add";
+                addAdWindow = new AddAdWindow();
+                addAdWindow.DataContext = this;
+                addAdWindow.ShowDialog();
+            }
+        }
+
+        private void fillYears()
+        {
+            
+            if (!years.Any())
+            {
+                for (int i = DateTime.Today.Year; i >= 1920;)
+                {
+                    years.Add(i.ToString());
+                    if (i <= 1960)
+                    {
+                        i -= 5;
+                    }
+                    else
+                    {
+                        i--;
+                    }
+
+                }
+            }
+        }
+
+        public void AddEditAd()
+        {
+            if (checkInputs())
+            {
+                if(addEditBtn == "Add")
+                {
+                    Ad tmp;
+                    if (DescriptionAdd == null || DescriptionAdd == "")
+                    {
+                        string generatedDescription = $"I am selling my {YearAdd} {BrandAdd}, for more information contact me. (This text is auto generated!)";
+                        tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), generatedDescription);
+                    }
+                    else
+                    {
+
+                        tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), DescriptionAdd);
+                    }
+                    Ads.Add(tmp);
+                    System.Threading.Thread.Sleep(100); // BAD PRACTICE
+                    addAdWindow.Close();
+                }else
+                {
+                    currentlySelectedAd.Brand = BrandAdd;
+                    currentlySelectedAd.Model = ModelAdd;
+                    currentlySelectedAd.ProductionYear = int.Parse(YearAdd);
+                    currentlySelectedAd.Mileage = int.Parse(MileageAdd);
+                    currentlySelectedAd.Fuel = FuelAdd;
+                    currentlySelectedAd.EngineCapacity = int.Parse(CapacityAdd);
+                    currentlySelectedAd.Transmission = TransmissionAdd;
+                    currentlySelectedAd.EnginePower = int.Parse(PowerAdd);
+                    currentlySelectedAd.Description = DescriptionAdd;
+                }
             }
         }
 
@@ -86,11 +357,182 @@ namespace CarSales.ViewModels
             }
         }
 
-        public void EditAd()
+        public string BrandAdd
         {
-            if (currentlySelectedAd != null)
+            get { return this.brandAdd; }
+            set { 
+                brandAdd = value;
+                NotifyPropertyChanged(nameof(BrandAdd));
+            }
+        }
+
+        public string ModelAdd
+        {
+            get { return modelAdd; }
+            set
             {
-                currentlySelectedAd.Brand = "Edited!";
+                modelAdd = value;
+                NotifyPropertyChanged(nameof(ModelAdd));
+            }
+        }
+
+        public string YearAdd
+        {
+            get { return yearAdd; }
+            set
+            {
+                yearAdd = value;
+                NotifyPropertyChanged(nameof(YearAdd));
+            }
+        }
+
+        public string MileageAdd
+        {
+            get { return mileageAdd; }
+            set
+            {
+                mileageAdd = value;
+                if (mileageAdd != null)
+                {
+                    mileageAdd = value;
+                    errorsViewModel.ClearErrors(nameof(MileageAdd));
+                    if (mileageAdd.All(char.IsDigit) && mileageAdd != "")
+                    {
+                        if (int.Parse(mileageAdd) > 5000000 || int.Parse(mileageAdd) < 0)
+                        {
+                            errorsViewModel.AddError(nameof(MileageAdd), "Mileage error");
+                        }
+                    }
+                    else
+                    {
+                        errorsViewModel.AddError(nameof(MileageAdd), "Mileage error");
+                    }
+                    NotifyPropertyChanged(nameof(MileageAdd));
+                }
+                
+            }
+        }
+        public string FuelAdd
+        {
+            get { return fuelAdd; }
+            set
+            {
+                fuelAdd = value;
+                NotifyPropertyChanged(nameof(FuelAdd));
+            }
+        }
+        public string CapacityAdd
+        {
+            get { return capacityAdd; }
+            set
+            {
+                capacityAdd = value;
+                if (capacityAdd != null)
+                {   
+                    errorsViewModel.ClearErrors(nameof(CapacityAdd));
+
+                    if (capacityAdd.All(char.IsDigit) && capacityAdd != "")
+                    {
+                        if (int.Parse(capacityAdd) > 20000 || int.Parse(capacityAdd) < 0)
+                        {
+                            errorsViewModel.AddError(nameof(CapacityAdd), "Capacity error");
+                        }
+                    }
+                    else
+                    {
+                        errorsViewModel.AddError(nameof(CapacityAdd), "Capacity error");
+                    }
+
+                    NotifyPropertyChanged(nameof(CapacityAdd));
+                }
+
+            }
+        }
+
+        public string TransmissionAdd
+        {
+            get { return transmissionAdd; }
+            set
+            {
+                transmissionAdd = value;
+                NotifyPropertyChanged(nameof(TransmissionAdd));
+            }
+        }
+
+        public string PowerAdd
+        {
+            get { return powerAdd; }
+            set
+            {
+                powerAdd = value;
+                if (powerAdd != null)
+                {   
+                    errorsViewModel.ClearErrors(nameof(PowerAdd));
+                    if (powerAdd.All(char.IsDigit) && powerAdd != "")
+                    {
+                        if (int.Parse(powerAdd) < 0 || int.Parse(powerAdd) > 9999)
+                        {
+                            errorsViewModel.AddError(nameof(PowerAdd), "Power error");
+                        }
+                    }
+                    else
+                    {
+                        errorsViewModel.AddError(nameof(PowerAdd), "Power error");
+                    }
+                    NotifyPropertyChanged(nameof(PowerAdd));
+                } 
+            }
+        }
+
+        public string DescriptionAdd
+        {
+            get { return descriptionAdd; }
+            set
+            {
+                descriptionAdd = value;
+                NotifyPropertyChanged(nameof(DescriptionAdd));
+            }
+        }
+        private bool checkInputs()
+        {
+            if (BrandAdd != null &&
+               ModelAdd != null &&
+               YearAdd != null &&
+               MileageAdd != null &&
+               FuelAdd != null &&
+               CapacityAdd != null &&
+               TransmissionAdd != null &&
+               PowerAdd != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string AddEditBtn
+        {
+            get { return addEditBtn; }
+            set
+            {
+                if(value != addEditBtn)
+                {
+                    addEditBtn = value;
+                }
+                NotifyPropertyChanged(nameof(AddEditBtn));
+            }
+        }
+
+        // Edit Window
+        public void OpenEditWindow()
+        {
+            if(currentlySelectedAd != null && editAdWindow == null)
+            {
+                fillYears(); // Fill years for Combo Box Items.
+                AddEditBtn = "Edit";
+                editAdWindow = new AddAdWindow();
+                editAdWindow.DataContext = this;
+                editAdWindow.Owner = mainWindow;
+                editAdWindow.Show();
             }
             else
             {

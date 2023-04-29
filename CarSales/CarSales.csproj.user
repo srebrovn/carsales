@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\Windows\AddAdWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Windows\SettingsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserControls\MenuBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -18,7 +24,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Page Update="View\Windows\AddAdWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Windows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UserControls\MenuBar.xaml">

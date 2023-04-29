@@ -21,12 +21,12 @@
                 <MenuItem Foreground="Black" Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Ads" FontSize="16">
-                <MenuItem Foreground="Black" Header="Settings"/>
+                <MenuItem Foreground="Black" Header="Settings" Command="{Binding OpenSettingsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="Tools" FontSize="16">
-                <MenuItem Foreground="Black" Header="Add" Command="{Binding AddItemCommand}"/>
-                <MenuItem Foreground="Black" Header="Delete" Command="{Binding DeleteItemCommand}"/>
-                <MenuItem Foreground="Black" Header="Edit" Command="{Binding EditItemCommand}"/>
+                <MenuItem Foreground="Black" Header="Add" Command="{Binding OpenAddWindowCommand}"/>
+                <MenuItem Foreground="Black" Header="Delete" Command="{Binding DeleteAdCommand}"/>
+                <MenuItem Foreground="Black" Header="Edit" Command="{Binding OpenEditWindowCommand}"/>
             </MenuItem>
         </Menu>
     </Grid>
