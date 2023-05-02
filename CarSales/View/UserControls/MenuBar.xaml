@@ -18,6 +18,8 @@
         </Grid>
         <Menu Grid.Row="1" Background="#264C79" Foreground="GhostWhite">
             <MenuItem Header="File" FontSize="16">
+                <MenuItem Foreground="Black" Header="Import XML" Command="{Binding OpenXMLFileDialogCommand}"/>
+                <MenuItem Foreground="Black" Header="Export XML" Command="{Binding SaveXMLFileDialogCommand}"/>
                 <MenuItem Foreground="Black" Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Ads" FontSize="16">

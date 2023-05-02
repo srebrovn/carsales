@@ -10,6 +10,7 @@ namespace CarSales.Models
     [XmlRoot("Ad")]
     public class Ad : INotifyPropertyChanged
     {
+        private Guid id;
         private string brand;
         private string model;
         private int productionYear;
@@ -25,6 +26,7 @@ namespace CarSales.Models
         private byte[] imageBytes;
         public Ad()
         {
+            Id = Guid.NewGuid();
             Brand = "";
             Model = "";
             ProductionYear = 0;
@@ -51,6 +53,7 @@ namespace CarSales.Models
             BitmapImage image
             )
         {
+            Id = Guid.NewGuid();
             Brand = brand;
             Model = model;
             ProductionYear = productionYear;
@@ -63,6 +66,15 @@ namespace CarSales.Models
             Description = description;
             Image = image;
         }
+
+        [XmlElement("Id")]
+        public Guid Id {
+            get { return id; }
+            set { 
+                id = value;
+                NotifyPropertyChanged(nameof(Id));
+            }
+        }    
 
         [XmlElement("Brand")]
         public string Brand

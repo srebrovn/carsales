@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarSales.Commands
 {
-    public class ImageCommand: Command
+    public class DialogCommand: Command
     {
         private Action _execute;
-        public ImageCommand(Action execute)
+        public DialogCommand(Action execute)
         {
             _execute = execute;
         }

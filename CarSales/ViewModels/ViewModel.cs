@@ -69,7 +69,6 @@ namespace CarSales.ViewModels
         private string priceAdd;
         private string descriptionAdd;
 
-
         // EditAdWindow
         AddAdWindow editAdWindow;
 
@@ -77,12 +76,14 @@ namespace CarSales.ViewModels
         public OpenWindowCommand? OpenSettingsWindowCommand{ get; set; }   
         public OpenWindowCommand OpenAddWindowCommand { get; set; }
         public OpenWindowCommand OpenEditWindowCommand { get; set; }
-        public ImageCommand OpenImageDialogCommand { get; set; }
+        public DialogCommand OpenImageDialogCommand { get; set; }
+        public DialogCommand OpenXMLFileDialogCommand { get; set; }
+        public DialogCommand SaveXMLFileDialogCommand { get; set; }
         public AddCommand? AddEditAdCommand { get; set; }
-        public DeleteCommand? DeleteAdCommand { get; set; }
         public AddCommand? AddBrandCommand { get; set; }
+        public EditCommand? EditBrandCommand { get; set; }
+        public DeleteCommand? DeleteAdCommand { get; set; }       
         public DeleteCommand? DeleteBrandCommand { get ; set; } 
-        public EditCommand? EditBrandCommand { get; set; }  
 
         public ViewModel(Window window)
         {
@@ -100,7 +101,10 @@ namespace CarSales.ViewModels
             DeleteBrandCommand = new DeleteCommand(DeleteBrand);
             EditBrandCommand = new EditCommand(EditBrand);
 
-            OpenImageDialogCommand = new ImageCommand(OpenImage);
+            // Dialog Commands
+            OpenImageDialogCommand = new DialogCommand(OpenImage);
+            OpenXMLFileDialogCommand = new DialogCommand(OpenXMLDialog);
+            SaveXMLFileDialogCommand = new DialogCommand(SaveXMLDialog);
 
             // Window Commands
             OpenSettingsWindowCommand = new OpenWindowCommand(OpenSettingsWindow);
@@ -113,51 +117,6 @@ namespace CarSales.ViewModels
 
             fillBrandsFromSettings();
             Deserialize();
-        }
-
-        private void Serialize(ObservableCollection<Ad> ads)
-        {
-            
-            // Insert code to set properties and fields of the object.  
-            XmlSerializer mySerializer = new
-            XmlSerializer(typeof(ObservableCollection<Ad>));
-            // To write to a file, create a StreamWriter object.  
-            StreamWriter myWriter = new StreamWriter("ads.xml");
-            mySerializer.Serialize(myWriter, ads);
-            myWriter.Close();
-
-        }
-
-        private void Deserialize()
-        {
-            if(File.Exists(ADSFILE))
-            {
-                var serializer = new XmlSerializer(typeof(ObservableCollection<Ad>));
-                using (var stream = new StreamReader(ADSFILE))
-                {
-                    ads = (ObservableCollection<Ad>)serializer.Deserialize(stream);
-                    NotifyPropertyChanged("Ads");
-                }
-            }
-        }
-
-        private void OpenImage()
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
-            fileDialog.Title = "Pick Image...";
-
-            bool? success = fileDialog.ShowDialog();
-
-            if(success == true)
-            {
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.UriSource = new Uri(fileDialog.FileName);
-                bitmapImage.EndInit();
-
-                Image = bitmapImage;
-            }
         }
 
         // Errors
@@ -190,6 +149,71 @@ namespace CarSales.ViewModels
             PriceAdd = null;
             DescriptionAdd = null;
             Image = null;
+        }
+
+        private void Serialize(ObservableCollection<Ad> ads)
+        {
+
+            // Insert code to set properties and fields of the object.  
+            XmlSerializer mySerializer = new
+            XmlSerializer(typeof(ObservableCollection<Ad>));
+            // To write to a file, create a StreamWriter object.  
+            StreamWriter myWriter = new StreamWriter("ads.xml");
+            mySerializer.Serialize(myWriter, ads);
+            myWriter.Close();
+
+        }
+
+        private void Deserialize()
+        {
+            if (File.Exists(ADSFILE))
+            {
+                var serializer = new XmlSerializer(typeof(ObservableCollection<Ad>));
+                using (var stream = new StreamReader(ADSFILE))
+                {
+                    ads = (ObservableCollection<Ad>)serializer.Deserialize(stream);
+                    NotifyPropertyChanged("Ads");
+                }
+            }
+        }
+
+        private void OpenImage()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
+            fileDialog.Title = "Pick Image...";
+
+            bool? success = fileDialog.ShowDialog();
+
+            if (success == true)
+            {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(fileDialog.FileName);
+                bitmapImage.EndInit();
+
+                Image = bitmapImage;
+            }
+        }
+
+        private void OpenXMLDialog()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML files (*.xml)|*.xml";
+            if (openFileDialog.ShowDialog() == true)
+            {              
+                string selectedFilePath = openFileDialog.FileName; 
+            }
+        }
+
+        private void SaveXMLDialog()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XML files (*.xml)|*.xml";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string selectedFilePath = saveFileDialog.FileName;
+            }
         }
 
         // MainWindow
@@ -356,8 +380,7 @@ namespace CarSales.ViewModels
         }
 
         private void fillYears()
-        {
-            
+        {            
             if (!years.Any())
             {
                 for (int i = DateTime.Today.Year; i >= 1920;)
@@ -371,7 +394,6 @@ namespace CarSales.ViewModels
                     {
                         i--;
                     }
-
                 }
             }
         }
@@ -390,12 +412,10 @@ namespace CarSales.ViewModels
                     }
                     else
                     {
-
                         tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), int.Parse(PriceAdd), DescriptionAdd, Image);
                     }
                     Ads.Add(tmp);
                     Serialize(Ads);
-                    System.Threading.Thread.Sleep(100); // BAD PRACTICE
                     if(addAdWindow != null)
                     {
                         addAdWindow.Close();
@@ -404,6 +424,7 @@ namespace CarSales.ViewModels
                    
                 }else
                 {
+
                     currentlySelectedAd.Brand = BrandAdd;
                     currentlySelectedAd.Model = ModelAdd;
                     currentlySelectedAd.ProductionYear = int.Parse(YearAdd);
@@ -415,7 +436,28 @@ namespace CarSales.ViewModels
                     currentlySelectedAd.Price = int.Parse(PriceAdd);
                     currentlySelectedAd.Description = DescriptionAdd;
                     currentlySelectedAd.Image = Image;
-                    System.Threading.Thread.Sleep(100);
+
+                    Ad obj = ads.FirstOrDefault(x => x.Id == currentlySelectedAd.Id);
+
+                    if(obj != null)
+                    {
+                        obj.Brand = BrandAdd;
+                        obj.Model = ModelAdd;
+                        obj.ProductionYear = int.Parse(YearAdd);
+                        obj.Mileage = int.Parse(MileageAdd);
+                        obj.Fuel = FuelAdd;
+                        obj.EngineCapacity = int.Parse(CapacityAdd);
+                        obj.Transmission = TransmissionAdd;
+                        obj.EnginePower = int.Parse(PowerAdd);
+                        obj.Price = int.Parse(PriceAdd);
+                        obj.Description = DescriptionAdd;
+                        obj.Image = Image;
+
+                        int index = ads.IndexOf(obj);
+                        Ads[index] = obj;
+                        Serialize(Ads);
+                    }
+
                     if(editAdWindow != null) {
                         editAdWindow.Close();
                         editAdWindow = null;
@@ -428,7 +470,12 @@ namespace CarSales.ViewModels
         {
             if (currentlySelectedAd != null)
             {
-                Ads.Remove(currentlySelectedAd);
+                Ad obj = ads.FirstOrDefault(x => x.Id == currentlySelectedAd.Id);
+                if(obj != null)
+                {
+                    Ads.Remove(obj);
+                    Serialize(Ads);
+                }   
             }
             else
             {
