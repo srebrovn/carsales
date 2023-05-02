@@ -172,7 +172,7 @@
             </StackPanel>
             
             <Label  Grid.Column="0" Grid.Row="1"  Content="Description:" FontSize="16" Margin="5 5 0 0"/>
-            <TextBox  Grid.Column="0" Grid.Row="1" Text="{Binding DescriptionAdd}" Height="80" MinHeight="50" Margin="10 40 25 0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <TextBox  Grid.Column="0" Grid.Row="1" Text="{Binding DescriptionAdd}" Height="80" MinHeight="50" Margin="10 40 25 0" MaxLength="55" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
             <Button Grid.Column="0" Grid.Row="1" Content="{Binding AddEditBtn}" Command="{Binding AddEditAdCommand}" IsEnabled="{Binding CanCreate}" Height="30" Margin="10 0 25 25" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>

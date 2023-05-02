@@ -1,9 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 
 namespace CarSales.Models
 {
+    [Serializable]
+    [XmlRoot("Ad")]
     public class Ad : INotifyPropertyChanged
     {
         private string brand;
@@ -18,6 +22,21 @@ namespace CarSales.Models
         private int price;
         private string description;
         private BitmapImage image;
+        private byte[] imageBytes;
+        public Ad()
+        {
+            Brand = "";
+            Model = "";
+            ProductionYear = 0;
+            Mileage = 0;
+            Fuel = "";
+            Transmission = "";
+            EngineCapacity = 0;
+            EnginePower = 0;
+            Price = 0;
+            Description = "";
+            Image = new BitmapImage();
+        }
 
         public Ad(string brand,
             string model,
@@ -45,6 +64,7 @@ namespace CarSales.Models
             Image = image;
         }
 
+        [XmlElement("Brand")]
         public string Brand
         {
             get { return brand; }
@@ -55,6 +75,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("Model")]
         public string Model
         {
             get
@@ -68,6 +89,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("ProductionYear")]
         public int ProductionYear
         {
             get
@@ -80,7 +102,7 @@ namespace CarSales.Models
                 {
                     productionYear = value;
                     NotifyPropertyChanged(nameof(ProductionYear));
-                }else
+                } else
                 {
                     productionYear = DateTime.Now.Year;
                 }
@@ -88,6 +110,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("Mileage")]
         public int Mileage
         {
             get
@@ -108,6 +131,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("Fuel")]
         public string Fuel
         {
             get
@@ -128,6 +152,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("Transmission")]
         public string Transmission
         {
             get
@@ -148,6 +173,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("EngineCapacity")]
         public int EngineCapacity
         {
             get
@@ -168,6 +194,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("EnginePower")]
         public int EnginePower
         {
             get
@@ -190,7 +217,7 @@ namespace CarSales.Models
                 NotifyPropertyChanged(nameof(EnginePowerKW));
             }
         }
-
+        [XmlIgnore]
         public int EnginePowerKW
         {
             get { return enginePowerKW; }
@@ -200,22 +227,24 @@ namespace CarSales.Models
             }
         }
 
+        [XmlElement("Price")]
         public int Price
         {
-            get { return price;}
+            get { return price; }
             set
             {
-                if( value < 0)
+                if (value < 0)
                 {
                     price = 0;
-                }else
+                } else
                 {
                     price = value;
                 }
-                NotifyPropertyChanged(nameof(Price));   
+                NotifyPropertyChanged(nameof(Price));
             }
         }
 
+        [XmlElement("Description")]
         public string Description
         {
             get
@@ -236,6 +265,7 @@ namespace CarSales.Models
             }
         }
 
+        [XmlIgnore]
         public BitmapImage Image
         {
 
@@ -245,28 +275,71 @@ namespace CarSales.Models
             }
             set
             {
-                
+
                 image = value;
-                if(image == null)
+                if (image == null)
                 {
                     string brandLower = brand.ToLower();
                     image = new BitmapImage();
                     image.BeginInit();
                     if (brandLower.Contains("audi"))
-                    { 
+                    {
                         image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/audi.jpg");
-                        
-                    }else if(brandLower.Contains("bmw")) {
+
+                    } else if (brandLower.Contains("bmw")) {
                         image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/bmw.png");
-                    }else if (brandLower.Contains("mercedes"))
+                    } else if (brandLower.Contains("mercedes"))
                     {
                         image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/mercedes.png");
-                    }else
+                    } else
                     {
                         image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/car.png");
                     }
                     image.EndInit();
+
                 }
+            }
+        }
+        [XmlElement("Image")]
+        public byte[] ImageBytes
+        {
+            get
+            {
+                if(image != null)
+                {
+                    imageBytes = EncodeImage(image);
+                } 
+                return imageBytes;
+            }
+            set
+            {
+                imageBytes = value;
+                Image = DecodeImage(value);
+            }
+        }
+
+        public byte[] EncodeImage(BitmapImage image) {
+            byte[] data;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(image));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                data = ms.ToArray();
+            }
+            return data;
+        }
+
+        public BitmapImage DecodeImage(byte[] data)
+        {
+            using (var ms = new System.IO.MemoryStream(data))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
             }
         }
 

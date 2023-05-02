@@ -10,11 +10,14 @@ using System.Collections.Generic;
 using System.Collections;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace CarSales.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        public static string ADSFILE = "ads.xml";
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
@@ -109,7 +112,33 @@ namespace CarSales.ViewModels
             Years = new List<string>();
 
             fillBrandsFromSettings();
+            Deserialize();
+        }
+
+        private void Serialize(ObservableCollection<Ad> ads)
+        {
             
+            // Insert code to set properties and fields of the object.  
+            XmlSerializer mySerializer = new
+            XmlSerializer(typeof(ObservableCollection<Ad>));
+            // To write to a file, create a StreamWriter object.  
+            StreamWriter myWriter = new StreamWriter("ads.xml");
+            mySerializer.Serialize(myWriter, ads);
+            myWriter.Close();
+
+        }
+
+        private void Deserialize()
+        {
+            if(File.Exists(ADSFILE))
+            {
+                var serializer = new XmlSerializer(typeof(ObservableCollection<Ad>));
+                using (var stream = new StreamReader(ADSFILE))
+                {
+                    ads = (ObservableCollection<Ad>)serializer.Deserialize(stream);
+                    NotifyPropertyChanged("Ads");
+                }
+            }
         }
 
         private void OpenImage()
@@ -158,8 +187,9 @@ namespace CarSales.ViewModels
             CapacityAdd = null;
             TransmissionAdd = null;
             PowerAdd = null;
-            priceAdd = null;
+            PriceAdd = null;
             DescriptionAdd = null;
+            Image = null;
         }
 
         // MainWindow
@@ -364,6 +394,7 @@ namespace CarSales.ViewModels
                         tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), int.Parse(PriceAdd), DescriptionAdd, Image);
                     }
                     Ads.Add(tmp);
+                    Serialize(Ads);
                     System.Threading.Thread.Sleep(100); // BAD PRACTICE
                     if(addAdWindow != null)
                     {
@@ -385,7 +416,6 @@ namespace CarSales.ViewModels
                     currentlySelectedAd.Description = DescriptionAdd;
                     currentlySelectedAd.Image = Image;
                     System.Threading.Thread.Sleep(100);
-                    
                     if(editAdWindow != null) {
                         editAdWindow.Close();
                         editAdWindow = null;
