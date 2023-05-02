@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\App.xaml
-6599633521
+7-1070826301
 
-19-978972598
-194-1617825143
-View\UserControls\MenuBar.xaml;View\UserControls\SearchBox.xaml;View\UserControls\SortComboBox.xaml;View\Windows\AddAdWindow.xaml;View\Windows\MainWindow.xaml;View\Windows\SettingsWindow.xaml;
+21-908690523
+1941709816142
+View\UserControls\ListViewAds.xaml;View\UserControls\MenuBar.xaml;View\UserControls\SearchBox.xaml;View\UserControls\SortComboBox.xaml;View\Windows\AddAdWindow.xaml;View\Windows\MainWindow.xaml;View\Windows\SettingsWindow.xaml;
 
 True
 

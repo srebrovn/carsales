@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="CarSales.View.UserControls.ListViewAds"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarSales.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ListView ItemsSource="{Binding Ads}" SelectedItem="{Binding CurrentlySelected}" x:Name="lvAds" Margin="0 0 0 40"  HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="False">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" CornerRadius="1" BorderBrush="Black">
+                        <Grid HorizontalAlignment="Stretch" Height="300" MinWidth="550">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="13*"/>
+                            </Grid.RowDefinitions>
+                            <Border Background="#343A40" Grid.Row="0"  BorderBrush="Gray" BorderThickness="1" Margin="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0 0 0">
+                                    <Label Foreground="WhiteSmoke" FontSize="16" FontWeight="Bold" Content="{Binding Brand}"/>
+                                    <Label Foreground="WhiteSmoke" FontSize="16" FontWeight="Bold" Content="{Binding Model}"/>
+                                </StackPanel>
+                            </Border>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+            
+                                <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1" Margin="10 15 10 25">
+                                    <Image Source="{Binding Image}"
+                                       Width="200" Height="200" Margin="5,5,25,0" Stretch="UniformToFill"/>
+                                </Border>
+                                <Line Grid.Column="0" X1="280" Y1="0" X2="280" Y2="260" Stroke="LightGray" StrokeThickness="1" Margin="0 0 5 0" />
+
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,15,0,0">
+                                    <StackPanel Background="#F2F2F2" Orientation="Horizontal">
+                                        <Label FontSize="16" FontStyle="Normal" Content="First registration:"/>
+                                        <Label FontSize="16" FontStyle="Normal" Content="{Binding ProductionYear}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label FontSize="16" FontStyle="Normal" Content="Kilometers:"/>
+                                        <Label FontSize="16" FontStyle="Normal" Content="{Binding Mileage}"/>
+                                    </StackPanel>
+                                    <StackPanel Background="#F2F2F2" Orientation="Horizontal">
+                                        <Label FontSize="16" FontStyle="Normal" Content="Fuel:"/>
+                                        <Label FontSize="16" FontStyle="Normal" Content="{Binding Fuel}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label FontSize="16" FontStyle="Normal" Content="Transmission:"/>
+                                        <Label FontSize="16" FontStyle="Normal" Content="{Binding Transmission}"/>
+                                    </StackPanel>
+                                    <StackPanel Background="#F2F2F2" Orientation="Horizontal">
+                                        <Label FontSize="16" Content="Engine [ccm] [PS]:"/>
+                                        <Label FontSize="16" Content="{Binding EngineCapacity}"/>
+                                        <Label FontSize="16" Content=","/>
+                                        <Label FontSize="16" Content="{Binding EnginePower}"/>
+                                    </StackPanel>
+                                    <Border BorderBrush="LightGray" BorderThickness="1" MinHeight="40" MinWidth="100" Margin="0 50 10 5" HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Label FontSize="16" Content="Price:" HorizontalContentAlignment="Center"/>
+                                            <Label FontSize="16" Content="{Binding Price}" Padding="0 5 0 5" HorizontalContentAlignment="Center"/>
+                                            <Label FontSize="16" Content="€" Padding="0 5 5 5" HorizontalContentAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

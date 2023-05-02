@@ -8,6 +8,8 @@ using System.Linq;
 using CarSales.View.Windows;
 using System.Collections.Generic;
 using System.Collections;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
 
 namespace CarSales.ViewModels
 {
@@ -50,6 +52,7 @@ namespace CarSales.ViewModels
         AddAdWindow addAdWindow;
 
         private string addEditBtn;
+        private BitmapImage image;
 
         private string errorMessage;
         private string brandAdd;
@@ -60,17 +63,20 @@ namespace CarSales.ViewModels
         private string capacityAdd;
         private string transmissionAdd;
         private string powerAdd;
+        private string priceAdd;
         private string descriptionAdd;
+
 
         // EditAdWindow
         AddAdWindow editAdWindow;
 
         // COMMANDS
-        public AddCommand? AddEditAdCommand { get; set; }
-        public DeleteCommand? DeleteAdCommand { get; set; }
         public OpenWindowCommand? OpenSettingsWindowCommand{ get; set; }   
         public OpenWindowCommand OpenAddWindowCommand { get; set; }
         public OpenWindowCommand OpenEditWindowCommand { get; set; }
+        public ImageCommand OpenImageDialogCommand { get; set; }
+        public AddCommand? AddEditAdCommand { get; set; }
+        public DeleteCommand? DeleteAdCommand { get; set; }
         public AddCommand? AddBrandCommand { get; set; }
         public DeleteCommand? DeleteBrandCommand { get ; set; } 
         public EditCommand? EditBrandCommand { get; set; }  
@@ -91,6 +97,8 @@ namespace CarSales.ViewModels
             DeleteBrandCommand = new DeleteCommand(DeleteBrand);
             EditBrandCommand = new EditCommand(EditBrand);
 
+            OpenImageDialogCommand = new ImageCommand(OpenImage);
+
             // Window Commands
             OpenSettingsWindowCommand = new OpenWindowCommand(OpenSettingsWindow);
             OpenAddWindowCommand = new OpenWindowCommand(OpenAddWindow);
@@ -102,6 +110,25 @@ namespace CarSales.ViewModels
 
             fillBrandsFromSettings();
             
+        }
+
+        private void OpenImage()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
+            fileDialog.Title = "Pick Image...";
+
+            bool? success = fileDialog.ShowDialog();
+
+            if(success == true)
+            {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(fileDialog.FileName);
+                bitmapImage.EndInit();
+
+                Image = bitmapImage;
+            }
         }
 
         // Errors
@@ -131,6 +158,7 @@ namespace CarSales.ViewModels
             CapacityAdd = null;
             TransmissionAdd = null;
             PowerAdd = null;
+            priceAdd = null;
             DescriptionAdd = null;
         }
 
@@ -147,15 +175,23 @@ namespace CarSales.ViewModels
             set
             {
                 currentlySelectedAd = value;
-                BrandAdd = currentlySelectedAd.Brand;
-                ModelAdd = currentlySelectedAd.Model;
-                YearAdd = (currentlySelectedAd.ProductionYear).ToString();
-                MileageAdd = currentlySelectedAd.Mileage.ToString();
-                FuelAdd = currentlySelectedAd.Fuel;
-                CapacityAdd = currentlySelectedAd.EngineCapacity.ToString();
-                TransmissionAdd = currentlySelectedAd.Transmission;
-                PowerAdd = currentlySelectedAd.EnginePower.ToString();
-                DescriptionAdd = currentlySelectedAd.Description;
+                if(currentlySelectedAd != null)
+                {
+                    BrandAdd = currentlySelectedAd.Brand;
+                    ModelAdd = currentlySelectedAd.Model;
+                    YearAdd = (currentlySelectedAd.ProductionYear).ToString();
+                    MileageAdd = currentlySelectedAd.Mileage.ToString();
+                    FuelAdd = currentlySelectedAd.Fuel;
+                    CapacityAdd = currentlySelectedAd.EngineCapacity.ToString();
+                    TransmissionAdd = currentlySelectedAd.Transmission;
+                    PowerAdd = currentlySelectedAd.EnginePower.ToString();
+                    PriceAdd = currentlySelectedAd.Price.ToString();
+                    DescriptionAdd = currentlySelectedAd.Description;
+                }else
+                {
+                    clearFields();
+                }
+                
                 NotifyPropertyChanged("CurrentlySelected");
             }
         }
@@ -320,16 +356,21 @@ namespace CarSales.ViewModels
                     if (DescriptionAdd == null || DescriptionAdd == "")
                     {
                         string generatedDescription = $"I am selling my {YearAdd} {BrandAdd}, for more information contact me. (This text is auto generated!)";
-                        tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), generatedDescription);
+                        tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), int.Parse(PriceAdd), generatedDescription, Image);
                     }
                     else
                     {
 
-                        tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), DescriptionAdd);
+                        tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), int.Parse(PriceAdd), DescriptionAdd, Image);
                     }
                     Ads.Add(tmp);
                     System.Threading.Thread.Sleep(100); // BAD PRACTICE
-                    addAdWindow.Close();
+                    if(addAdWindow != null)
+                    {
+                        addAdWindow.Close();
+                        addAdWindow = null;
+                    }
+                   
                 }else
                 {
                     currentlySelectedAd.Brand = BrandAdd;
@@ -340,7 +381,15 @@ namespace CarSales.ViewModels
                     currentlySelectedAd.EngineCapacity = int.Parse(CapacityAdd);
                     currentlySelectedAd.Transmission = TransmissionAdd;
                     currentlySelectedAd.EnginePower = int.Parse(PowerAdd);
+                    currentlySelectedAd.Price = int.Parse(PriceAdd);
                     currentlySelectedAd.Description = DescriptionAdd;
+                    currentlySelectedAd.Image = Image;
+                    System.Threading.Thread.Sleep(100);
+                    
+                    if(editAdWindow != null) {
+                        editAdWindow.Close();
+                        editAdWindow = null;
+                    } 
                 }
             }
         }
@@ -484,6 +533,30 @@ namespace CarSales.ViewModels
             }
         }
 
+        public string PriceAdd
+        {
+            get { return priceAdd; }
+            set
+            {
+                priceAdd = value;
+                if(priceAdd != null)
+                {
+                    errorsViewModel.ClearErrors(nameof(PriceAdd));
+                    if(priceAdd.All(char.IsDigit) &&  priceAdd != "")
+                    {
+                        if(int.Parse(priceAdd) < 0)
+                        {
+                            errorsViewModel.AddError(nameof(PriceAdd), "Price error");
+                        }
+                    }else
+                    {
+                        errorsViewModel.AddError(nameof(PriceAdd), "Price error");
+                    }
+                    NotifyPropertyChanged(nameof(PriceAdd));
+                }
+            }
+        }
+
         public string DescriptionAdd
         {
             get { return descriptionAdd; }
@@ -502,6 +575,7 @@ namespace CarSales.ViewModels
                FuelAdd != null &&
                CapacityAdd != null &&
                TransmissionAdd != null &&
+               PowerAdd != null &&
                PowerAdd != null)
             {
                 return true;
@@ -522,6 +596,16 @@ namespace CarSales.ViewModels
             }
         }
 
+        public BitmapImage Image
+        {
+            get { return image; } 
+            set
+            {
+                image = value;
+                NotifyPropertyChanged(nameof(Image));
+            }
+        }
+
         // Edit Window
         public void OpenEditWindow()
         {
@@ -529,7 +613,7 @@ namespace CarSales.ViewModels
             {
                 fillYears(); // Fill years for Combo Box Items.
                 AddEditBtn = "Edit";
-                editAdWindow = new AddAdWindow();
+                editAdWindow = new AddAdWindow(); 
                 editAdWindow.DataContext = this;
                 editAdWindow.Owner = mainWindow;
                 editAdWindow.Show();

@@ -12,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CarSales.Models;
-using CarSales.View.UserControls;
-using CarSales.ViewModels;
 
-namespace CarSales
+namespace CarSales.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ListViewAds.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ListViewAds : UserControl
     {
-
-        public MainWindow()
+        public ListViewAds()
         {
             InitializeComponent();
-            ViewModel viewModel = new ViewModel(this);
-            DataContext = viewModel;
         }
     }
 }

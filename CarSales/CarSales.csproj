@@ -8,25 +8,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Icons\car_icon.png" />
-    <None Remove="Icons\down_arrow_icon.png" />
-    <None Remove="Icons\search_icon.png" />
-    <None Remove="Icons\up_arrow_icon.png" />
+    <None Remove="Resources\Icons\car_icon.png" />
+    <None Remove="Resources\Icons\down_arrow_icon.png" />
+    <None Remove="Resources\Icons\search_icon.png" />
+    <None Remove="Resources\Icons\up_arrow_icon.png" />
+    <None Remove="Resources\Images\audi.jpg" />
+    <None Remove="Resources\Images\bmw.png" />
+    <None Remove="Resources\Images\car.png" />
+    <None Remove="Resources\Images\mercedes.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Icons\car_icon.png">
+    <Resource Include="Resources\Icons\car_icon.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\down_arrow_icon.png">
+    <Resource Include="Resources\Icons\down_arrow_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\search_icon.png">
+    <Resource Include="Resources\Icons\search_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\up_arrow_icon.png">
+    <Resource Include="Resources\Icons\up_arrow_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\audi.jpg" />
+    <Resource Include="Resources\Images\bmw.png" />
+    <Resource Include="Resources\Images\car.png" />
+    <Resource Include="Resources\Images\mercedes.png" />
   </ItemGroup>
 
   <ItemGroup>

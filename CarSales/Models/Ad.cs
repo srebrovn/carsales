@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Media.Imaging;
 
 namespace CarSales.Models
 {
@@ -14,8 +15,9 @@ namespace CarSales.Models
         private int engineCapacity;
         private int enginePower;
         private int enginePowerKW;
+        private int price;
         private string description;
-        private string image = "";
+        private BitmapImage image;
 
         public Ad(string brand,
             string model,
@@ -25,7 +27,9 @@ namespace CarSales.Models
             string transmission,
             int engineCapacity,
             int enginePower,
-            string description
+            int price,
+            string description,
+            BitmapImage image
             )
         {
             Brand = brand;
@@ -36,7 +40,9 @@ namespace CarSales.Models
             Transmission = transmission;
             EngineCapacity = engineCapacity;
             EnginePower = enginePower;
+            Price = price;
             Description = description;
+            Image = image;
         }
 
         public string Brand
@@ -45,7 +51,7 @@ namespace CarSales.Models
             set
             {
                 brand = value;
-                NotifyPropertyChanged("Brand");
+                NotifyPropertyChanged(nameof(Brand));
             }
         }
 
@@ -58,7 +64,7 @@ namespace CarSales.Models
             set
             {
                 model = value;
-                NotifyPropertyChanged("Model");
+                NotifyPropertyChanged(nameof(Model));
             }
         }
 
@@ -73,7 +79,10 @@ namespace CarSales.Models
                 if (value > 1900 && value <= DateTime.Now.Year)
                 {
                     productionYear = value;
-                    NotifyPropertyChanged("ProductionYear");
+                    NotifyPropertyChanged(nameof(ProductionYear));
+                }else
+                {
+                    productionYear = DateTime.Now.Year;
                 }
 
             }
@@ -90,12 +99,12 @@ namespace CarSales.Models
                 if (value < 1000000 && value > 0)
                 {
                     mileage = value;
-                    NotifyPropertyChanged("Mileage");
                 }
                 else
                 {
                     mileage = 1;
                 }
+                NotifyPropertyChanged(nameof(Mileage));
             }
         }
 
@@ -115,7 +124,7 @@ namespace CarSales.Models
                 {
                     fuel = "Unknown";
                 }
-                NotifyPropertyChanged("Fuel");
+                NotifyPropertyChanged(nameof(Fuel));
             }
         }
 
@@ -135,7 +144,7 @@ namespace CarSales.Models
                 {
                     transmission = "Unknown";
                 }
-                NotifyPropertyChanged("Transmission");
+                NotifyPropertyChanged(nameof(Transmission));
             }
         }
 
@@ -155,7 +164,7 @@ namespace CarSales.Models
                 {
                     engineCapacity = 2000;
                 }
-                NotifyPropertyChanged("EngineCapacity");
+                NotifyPropertyChanged(nameof(EngineCapacity));
             }
         }
 
@@ -177,8 +186,8 @@ namespace CarSales.Models
                     enginePower = 1;
                     enginePowerKW = 1;
                 }
-                NotifyPropertyChanged("EnginePower");
-                NotifyPropertyChanged("EnginePowerKW");
+                NotifyPropertyChanged(nameof(EnginePower));
+                NotifyPropertyChanged(nameof(EnginePowerKW));
             }
         }
 
@@ -191,15 +200,19 @@ namespace CarSales.Models
             }
         }
 
-        public string Image
+        public int Price
         {
-            get
-            {
-                return image;
-            }
+            get { return price;}
             set
             {
-                image = value;
+                if( value < 0)
+                {
+                    price = 0;
+                }else
+                {
+                    price = value;
+                }
+                NotifyPropertyChanged(nameof(Price));   
             }
         }
 
@@ -220,6 +233,40 @@ namespace CarSales.Models
                     description = "";
                 }
                 NotifyPropertyChanged("Description");
+            }
+        }
+
+        public BitmapImage Image
+        {
+
+            get
+            {
+                return image;
+            }
+            set
+            {
+                
+                image = value;
+                if(image == null)
+                {
+                    string brandLower = brand.ToLower();
+                    image = new BitmapImage();
+                    image.BeginInit();
+                    if (brandLower.Contains("audi"))
+                    { 
+                        image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/audi.jpg");
+                        
+                    }else if(brandLower.Contains("bmw")) {
+                        image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/bmw.png");
+                    }else if (brandLower.Contains("mercedes"))
+                    {
+                        image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/mercedes.png");
+                    }else
+                    {
+                        image.UriSource = new Uri("pack://application:,,,/CarSales;component/Resources/Images/car.png");
+                    }
+                    image.EndInit();
+                }
             }
         }
 
