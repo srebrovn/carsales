@@ -12,12 +12,14 @@ using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Xml.Serialization;
+using System.Windows.Data;
 
 namespace CarSales.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public static string ADSFILE = "ads.xml";
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
@@ -43,9 +45,12 @@ namespace CarSales.ViewModels
         private ObservableCollection<string> brands; // Brands available
         private Ad currentlySelectedAd; // Currently selected AD from ListView.
 
+        public ICollectionView AdsCollectionView { get; }
         // Main Window
 
         private readonly Window mainWindow;
+        private string searchBoxText = string.Empty;
+        private int sortBoxTag;
 
         // Settings Window
         private string selectedBrandSettings; // Selected Brand in Settings Window. 
@@ -88,7 +93,7 @@ namespace CarSales.ViewModels
         public ViewModel(Window window)
         {
 
-            this.mainWindow = window;
+            mainWindow = window;
 
             errorsViewModel = new ErrorsViewModel();
             errorsViewModel.ErrorsChanged += ErrorsViewModel_ErrorsChanged;
@@ -115,9 +120,16 @@ namespace CarSales.ViewModels
             Brands = new ObservableCollection<string>();
             Years = new List<string>();
 
-            fillBrandsFromSettings();
+            FillBrandsFromSettings();
             Deserialize();
+
+            AdsCollectionView = CollectionViewSource.GetDefaultView(Ads); // ICollection for sorting / filter of ads.
+            AdsCollectionView.Filter = FilterAds;
+
+            SortBoxTag = 0; //Set sort Price: Low High
+
         }
+
 
         // Errors
         private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
@@ -250,6 +262,65 @@ namespace CarSales.ViewModels
             }
         }
 
+        public string SearchBoxText
+        {
+            get { return searchBoxText; }
+            set
+            {
+                searchBoxText = value;
+                NotifyPropertyChanged(nameof(SearchBoxText));
+                AdsCollectionView.Refresh();
+            }
+        }
+
+        public int SortBoxTag
+        {
+            get { return sortBoxTag; }
+            set
+            {
+                sortBoxTag = value;
+                NotifyPropertyChanged(nameof(SortBoxTag));
+                SortAds();
+            }
+        }
+        private bool FilterAds(object obj)
+        {
+            if (obj is Ad ad)
+            {
+                return ad.Brand.Contains(SearchBoxText, StringComparison.InvariantCultureIgnoreCase) ||
+                    ad.Model.Contains(SearchBoxText, StringComparison.InvariantCultureIgnoreCase) ||
+                    ad.Fuel.Contains(SearchBoxText, StringComparison.InvariantCultureIgnoreCase) ||
+                    ad.Transmission.Contains(SearchBoxText, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
+        }
+        public void SortAds()
+        {
+            if (sortBoxTag >= 0 && sortBoxTag <= 3)
+            {
+                AdsCollectionView.SortDescriptions.Clear();
+                switch (sortBoxTag)
+                {
+                    case 0:
+                        AdsCollectionView.SortDescriptions.Add(new SortDescription(nameof(Ad.Price), ListSortDirection.Ascending));
+                        break;
+                    case 1:
+                        AdsCollectionView.SortDescriptions.Add(new SortDescription(nameof(Ad.Price), ListSortDirection.Descending));
+                        break;
+                    case 2:
+                        AdsCollectionView.SortDescriptions.Add(new SortDescription(nameof(Ad.Mileage), ListSortDirection.Ascending));
+                        break;
+                    case 3:
+                        AdsCollectionView.SortDescriptions.Add(new SortDescription(nameof(Ad.Mileage), ListSortDirection.Descending));
+                        break;
+                    default:
+                        AdsCollectionView.SortDescriptions.Add(new SortDescription(nameof(Ad.Price), ListSortDirection.Ascending));
+                        break;
+                }
+                AdsCollectionView.Refresh();
+            }
+        }
+
         // Settings Window
         private void OpenSettingsWindow()
         {
@@ -258,7 +329,7 @@ namespace CarSales.ViewModels
             
             settingsWindow.Show();
         }
-        private void fillBrandsFromSettings()
+        private void FillBrandsFromSettings()
         {
             string val = Properties.Settings.Default.Brands;
 

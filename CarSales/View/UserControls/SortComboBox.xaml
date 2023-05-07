@@ -7,18 +7,34 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="250">
     <Grid>
-        <StackPanel Margin="10">
-            <ComboBox SelectedIndex="0" >
-                <ComboBoxItem  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10,10,10,8">
+            <ComboBox x:Name="cbSort" SelectedIndex="0">
+                <ComboBoxItem Tag="0" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/CarSales;component/Icons/up_arrow_icon.png" Width="20"/>
                         <TextBlock Text="Price: Low-High" VerticalAlignment="Center" />
                     </StackPanel>
                 </ComboBoxItem>
-                <ComboBoxItem >
+                <ComboBoxItem Tag="1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/CarSales;component/Icons/down_arrow_icon.png" Width="20"/>
                         <TextBlock Text="Price: High-Low" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ComboBoxItem>
+                <ComboBoxItem Tag="2">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/CarSales;component/Icons/down_arrow_icon.png" Width="20"/>
+                        <TextBlock Text="Mileage: Low-High" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ComboBoxItem>
+                <ComboBoxItem Tag="3">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/CarSales;component/Icons/down_arrow_icon.png" Width="20"/>
+                        <TextBlock Text="Mileage: High-Low" VerticalAlignment="Center" />
                     </StackPanel>
                 </ComboBoxItem>
             </ComboBox>

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView ItemsSource="{Binding Ads}" SelectedItem="{Binding CurrentlySelected}" x:Name="lvAds" Margin="0 0 0 40"  HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="False">
+        <ListView ItemsSource="{Binding AdsCollectionView}" SelectedItem="{Binding CurrentlySelected}" x:Name="lvAds" Margin="0 0 0 40"  HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" CornerRadius="1" BorderBrush="Black">

@@ -23,12 +23,31 @@ namespace CarSales
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        ViewModel viewModel;
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel viewModel = new ViewModel(this);
+            viewModel = new ViewModel(this);
             DataContext = viewModel;
+        }
+
+        private void SortComboBox_SortItemSelected(object obj, string indexStr)
+        {
+
+            if(indexStr.All(char.IsDigit) && indexStr != "")
+            {
+                int index = int.Parse(indexStr);
+                viewModel.SortBoxTag = index;
+            }
+        }
+
+        private void SearchBox_ButtonPressed(object obj, string text)
+        {
+            if(text != null)
+            {
+                text = text.Trim();
+                viewModel.SearchBoxText = text;
+            }
         }
     }
 }

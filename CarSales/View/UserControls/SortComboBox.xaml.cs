@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace CarSales.View.UserControls
 {
@@ -23,6 +12,26 @@ namespace CarSales.View.UserControls
         public SortComboBox()
         {
             InitializeComponent();
+            cbSort.SelectionChanged += OnSortItemSelected;
+        }
+
+        public delegate void SortItemSelectedEventHandler(object obj, string index);
+
+        public event SortItemSelectedEventHandler? SortItemSelected;
+
+        protected virtual void OnSortItemSelected(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem item = cbSort.SelectedItem as ComboBoxItem;
+
+            if(item != null)
+            {
+                string tagValue = (string)item.Tag;
+                if(tagValue != null)
+                {
+                    if(SortItemSelected != null)
+                        SortItemSelected.Invoke(this, tagValue);
+                }
+            }
         }
     }
 }

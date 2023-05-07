@@ -23,6 +23,19 @@ namespace CarSales.View.UserControls
         public SearchBox()
         {
             InitializeComponent();
+            btnSearch.Click += onSearchBoxButtonPressed;
+        }
+
+        public delegate void SearchBoxSubmitButtonEventHandler(object obj, string text);
+        public event SearchBoxSubmitButtonEventHandler ButtonPressed;
+
+        protected virtual void onSearchBoxButtonPressed(object sender, RoutedEventArgs e)
+        {
+            string text = tbInput.Text;
+            if(text != null)
+            {
+                ButtonPressed.Invoke(this, text);
+            }
         }
     }
 }

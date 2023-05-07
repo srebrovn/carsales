@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CarSales"
         mc:Ignorable="d"
         Title="SettingsWindow" Name="settingsWindow" Height="400" Width="400"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"  WindowStartupLocation="CenterOwner">
     <Grid>
         <TabControl>
             <TabItem Header="Brands">

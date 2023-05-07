@@ -33,3 +33,4 @@ C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales.pdb
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales.genruntimeconfig.cache
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\ref\CarSales.dll
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales_Content.g.cs

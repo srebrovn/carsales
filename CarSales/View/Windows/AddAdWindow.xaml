@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CarSales.View.Windows"
         mc:Ignorable="d"
         Title="AddAdWindow" Height="700" Width="500"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
             <Setter Property="Template">
@@ -50,6 +50,7 @@
                          Height="25"
                          Width="220"
                          Margin="5 0 0 0"
+                         MaxLength="55"
                          FontSize="14"
                          VerticalContentAlignment="Center"
                          HorizontalAlignment="Left"/>
@@ -68,7 +69,7 @@
                           HorizontalAlignment="Left"
                           />
             </StackPanel>
-            <Button Grid.Column="1" Margin="5 40 5 5"  Command="{Binding OpenImageDialogCommand}">
+            <Button Grid.Column="1" Margin="7 45 18 5"  Command="{Binding OpenImageDialogCommand}">
                 <Image Stretch="UniformToFill" Source="{Binding Image}"/>
             </Button>
         </Grid>
@@ -172,8 +173,8 @@
             </StackPanel>
             
             <Label  Grid.Column="0" Grid.Row="1"  Content="Description:" FontSize="16" Margin="5 5 0 0"/>
-            <TextBox  Grid.Column="0" Grid.Row="1" Text="{Binding DescriptionAdd}" Height="80" MinHeight="50" Margin="10 40 25 0" MaxLength="55" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <Button Grid.Column="0" Grid.Row="1" Content="{Binding AddEditBtn}" Command="{Binding AddEditAdCommand}" IsEnabled="{Binding CanCreate}" Height="30" Margin="10 0 25 25" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+            <TextBox  Grid.Column="0" Grid.Row="1" Text="{Binding DescriptionAdd}" TextWrapping="Wrap" AcceptsReturn="True" Height="100" MinHeight="80" Margin="10 40 25 0" FontSize="13" MaxLength="500" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <Button Grid.Column="0" Grid.Row="1" Content="{Binding AddEditBtn}" Command="{Binding AddEditAdCommand}" IsEnabled="{Binding CanCreate}"  Height="30" Margin="10 0 25 25" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 </Window>

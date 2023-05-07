@@ -6,7 +6,8 @@
         xmlns:userControls="clr-namespace:CarSales.View.UserControls"
         xmlns:local="clr-namespace:CarSales"
         mc:Ignorable="d"
-        Title="MainWindow" Name="mainWindow" MinWidth="1000" MinHeight="600" Height="800" Width="1200">
+        Title="MainWindow" Name="mainWindow" MinWidth="1000"
+        MinHeight="600" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -25,7 +26,7 @@
             </Grid.ColumnDefinitions>
             <DockPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5">
                 <Label MaxHeight="40" MinHeight="30" Content="Search:" FontSize="16" FontStyle="Italic" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <userControls:SearchBox MinHeight="30" MaxHeight="40" Height="30" Width="200" MaxWidth="300"/>
+                <userControls:SearchBox ButtonPressed="SearchBox_ButtonPressed" MinHeight="30" MaxHeight="40" Height="30" Width="200" MaxWidth="300"/>
             </DockPanel>
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -33,7 +34,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel  Grid.Row="0" Orientation="Horizontal"  HorizontalAlignment="Right">
-                    <userControls:SortComboBox Width="230" Height="50" MaxHeight="50" MaxWidth="250" />
+                    <userControls:SortComboBox SortItemSelected="SortComboBox_SortItemSelected" Width="230" Height="50" MaxHeight="50" MaxWidth="250" />
                 </StackPanel>
                 <userControls:ListViewAds Grid.Row="1" Width="auto"/>
             </Grid>
