@@ -27,6 +27,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Resources\ResourceDict.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\UserControls\ListViewAds.xaml">
       <SubType>Designer</SubType>
     </Page>

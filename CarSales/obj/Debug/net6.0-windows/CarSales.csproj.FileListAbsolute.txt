@@ -1,9 +1,3 @@
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.exe
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.dll.config
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.deps.json
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.runtimeconfig.json
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.dll
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.pdb
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales.csproj.AssemblyReference.cache
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\ListViewAds.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\MenuBar.g.cs
@@ -13,9 +7,18 @@ C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\Windows\MainWindow.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\Windows\SettingsWindow.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales_Content.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales_MarkupCompile.cache
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales_MarkupCompile.lref
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.exe
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.dll.config
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.deps.json
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.runtimeconfig.json
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.dll
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.pdb
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\Resources\ResourceDict.baml
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\App.baml
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\ListViewAds.baml
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\MenuBar.baml
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\SearchBox.baml
@@ -33,4 +36,3 @@ C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales.pdb
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales.genruntimeconfig.cache
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\ref\CarSales.dll
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales_Content.g.cs

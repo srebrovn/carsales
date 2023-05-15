@@ -130,7 +130,6 @@ namespace CarSales.ViewModels
 
         }
 
-
         // Errors
         private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
@@ -527,6 +526,7 @@ namespace CarSales.ViewModels
                         int index = ads.IndexOf(obj);
                         Ads[index] = obj;
                         Serialize(Ads);
+                        
                     }
 
                     if(editAdWindow != null) {
@@ -642,7 +642,6 @@ namespace CarSales.ViewModels
 
                     NotifyPropertyChanged(nameof(CapacityAdd));
                 }
-
             }
         }
 

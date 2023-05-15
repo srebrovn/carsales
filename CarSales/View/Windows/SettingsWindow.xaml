@@ -13,17 +13,21 @@
                 <Grid >
                     <StackPanel Width="250" HorizontalAlignment="Center">
 
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button x:Name="btnAddBrand" Command="{Binding AddBrandCommand}" Width="50" Height="20" Margin="5">Add</Button>
-                            <Button x:Name="btnEditBrand" Command="{Binding EditBrandCommand}" Width="50" Height="20" Margin="5">Edit</Button>
-                            <Button x:Name="btnDeleteBrand" Command="{Binding DeleteBrandCommand}" Width="50" Height="20" Margin="5">Delete</Button>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="btnAddBrand" Style="{StaticResource Button1}" Command="{Binding AddBrandCommand}"  Margin="5">Add</Button>
+                            <Button Grid.Column="1" x:Name="btnEditBrand" Style="{StaticResource Button1}" Command="{Binding EditBrandCommand}"  Margin="5">Edit</Button>
+                            <Button Grid.Column="2" x:Name="btnDeleteBrand" Style="{StaticResource Button1}" Command="{Binding DeleteBrandCommand}" Margin="5">Delete</Button>
+                        </Grid>
+                     
                         <TextBox Text="{Binding InputBrandSettings}" x:Name="tbBrand" Margin="5" >
                             
                         </TextBox>
-                        <ListView ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrandSettings}" x:Name="lvBrands" Margin="5" HorizontalContentAlignment="Center">
-                            
-                        </ListView>
+                        <ListView ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrandSettings}" x:Name="lvBrands" Margin="5" HorizontalContentAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
