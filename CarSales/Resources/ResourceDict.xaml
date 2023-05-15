@@ -2,16 +2,36 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="Button1" TargetType="Button">
-        <Setter Property="Background" Value="DarkOrange"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#F47A20"/>
+        <Setter Property="Foreground" Value="GhostWhite"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Green"/>
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Foreground" Value="Red"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="220"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="IsEditable" Value="False"/>
+        <Setter Property="MaxDropDownHeight" Value="150"/>
+    </Style>
+
+
+    <Style x:Key="MenuItem1" TargetType="MenuItem">
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+    <Style x:Key="MenuBarMenu" TargetType="Menu">
+        <Setter Property="Background" Value="#264C79"/>
+        <Setter Property="Foreground" Value="GhostWhite"/>
+    </Style>
+    <Style x:Key="MenuBarGrid" TargetType="Grid">
+        <Setter Property="Background" Value="#062F57"/>
+    </Style>
+    
 
 </ResourceDictionary>

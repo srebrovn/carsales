@@ -23,10 +23,8 @@
                             <Button Grid.Column="1" x:Name="btnEditBrand" Style="{StaticResource Button1}" Command="{Binding EditBrandCommand}"  Margin="5">Edit</Button>
                             <Button Grid.Column="2" x:Name="btnDeleteBrand" Style="{StaticResource Button1}" Command="{Binding DeleteBrandCommand}" Margin="5">Delete</Button>
                         </Grid>
-                     
-                        <TextBox Text="{Binding InputBrandSettings}" x:Name="tbBrand" Margin="5" >
-                            
-                        </TextBox>
+
+                        <TextBox Text="{Binding InputBrandSettings}" x:Name="tbBrand" Margin="5" />
                         <ListView ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrandSettings}" x:Name="lvBrands" Margin="5" HorizontalContentAlignment="Center"/>
                     </StackPanel>
                 </Grid>
