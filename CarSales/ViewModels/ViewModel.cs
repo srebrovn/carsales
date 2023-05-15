@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Xml.Serialization;
 using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace CarSales.ViewModels
 {
@@ -59,6 +60,7 @@ namespace CarSales.ViewModels
         private string secondsSettings;  //Seconds for autosave function
         private bool autoSaveEnabledSettings = false;
         private bool textBoxEnabledSettings = true;
+        DispatcherTimer dt;
 
         // AddAdWindow
         AddAdWindow addAdWindow;
@@ -124,6 +126,8 @@ namespace CarSales.ViewModels
             Brands = new ObservableCollection<string>();
             Years = new List<string>();
 
+            dt = new DispatcherTimer();
+            dt.Tick += (s, ee) => Serialize();
             FillBrandsFromSettings();
             Deserialize();
 
@@ -166,7 +170,7 @@ namespace CarSales.ViewModels
             Image = null;
         }
 
-        private void Serialize(ObservableCollection<Ad> ads)
+        private void Serialize()
         {
 
             // Insert code to set properties and fields of the object.  
@@ -496,11 +500,12 @@ namespace CarSales.ViewModels
                     {
                         SecondsSettings = "1";
                     }
-                    
+                    dt.Interval = new TimeSpan(0, int.Parse(MinutesSettings), int.Parse(SecondsSettings));
+                    dt.Start();
                 }
                 else
                 {
-
+                    dt.Stop();
                 }
                 NotifyPropertyChanged(nameof(AutoSaveEnabledSettings));
             }
@@ -565,7 +570,7 @@ namespace CarSales.ViewModels
                         tmp = new Ad(BrandAdd, ModelAdd, int.Parse(YearAdd), int.Parse(MileageAdd), FuelAdd, TransmissionAdd, int.Parse(CapacityAdd), int.Parse(PowerAdd), int.Parse(PriceAdd), DescriptionAdd, Image);
                     }
                     Ads.Add(tmp);
-                    Serialize(Ads);
+                    Serialize();
                     if(addAdWindow != null)
                     {
                         addAdWindow.Close();
@@ -605,7 +610,7 @@ namespace CarSales.ViewModels
 
                         int index = ads.IndexOf(obj);
                         Ads[index] = obj;
-                        Serialize(Ads);
+                        Serialize();
                         
                     }
 
@@ -625,7 +630,7 @@ namespace CarSales.ViewModels
                 if(obj != null)
                 {
                     Ads.Remove(obj);
-                    Serialize(Ads);
+                    Serialize();
                 }   
             }
             else
