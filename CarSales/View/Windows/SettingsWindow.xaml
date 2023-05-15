@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:CarSales"
         mc:Ignorable="d"
         Title="SettingsWindow" Name="settingsWindow" Height="400" Width="400"
@@ -29,7 +30,33 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="AutoSave"/>
+            <TabItem Header="AutoSave">
+
+                <Grid Width="120" Height="100">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Row="0" Grid.Column="0" Width="60" Content="Minutes: " HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox x:Name="tbMinutes" Text="{Binding MinutesSettings, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TextBoxEnabledSettings}" Grid.Row="0" Grid.Column="1" Height="20"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Width="60" Content="Seconds: " HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox x:Name="tbSeconds" Grid.Row="1" Grid.Column="1" Text="{Binding SecondsSettings, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TextBoxEnabledSettings}" Height="20"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="AutoSave" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="cbAutoSave" Grid.Row="2" Grid.Column="1" IsChecked="{Binding AutoSaveEnabledSettings}" HorizontalAlignment="Center" VerticalAlignment='Center'>
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.3" ScaleY="1.3" />
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

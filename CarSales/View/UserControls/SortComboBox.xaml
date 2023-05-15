@@ -12,7 +12,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Margin="10,10,10,8">
-            <ComboBox x:Name="cbSort" SelectedIndex="0">
+            <ComboBox x:Name="cbSort" Width="200" SelectedIndex="0">
                 <ComboBoxItem Tag="0" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/CarSales;component/Icons/up_arrow_icon.png" Width="20"/>

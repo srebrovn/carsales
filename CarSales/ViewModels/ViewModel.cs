@@ -55,6 +55,10 @@ namespace CarSales.ViewModels
         // Settings Window
         private string selectedBrandSettings; // Selected Brand in Settings Window. 
         private string inputBrandSettings; // Brand to be inserted into brands from Settings Window.
+        private string minutesSettings;  //Minutes for autosave function
+        private string secondsSettings;  //Seconds for autosave function
+        private bool autoSaveEnabledSettings = false;
+        private bool textBoxEnabledSettings = true;
 
         // AddAdWindow
         AddAdWindow addAdWindow;
@@ -397,7 +401,7 @@ namespace CarSales.ViewModels
             set
             {
                 brands = value;
-                NotifyPropertyChanged("Brands");
+                NotifyPropertyChanged(nameof(Brands));
             }
         }
 
@@ -410,7 +414,7 @@ namespace CarSales.ViewModels
                 if (!string.Equals(selectedBrandSettings, value))
                 {
                     selectedBrandSettings = value;
-                    NotifyPropertyChanged("SelectedBrandSettings");
+                    NotifyPropertyChanged(nameof(SelectedBrandSettings));
                 }
             }
         }
@@ -431,7 +435,83 @@ namespace CarSales.ViewModels
                 {
                     inputBrandSettings = "";
                 }
-                NotifyPropertyChanged("InputBrandSettings");
+                NotifyPropertyChanged(nameof(InputBrandSettings));
+            }
+        }
+
+        public string MinutesSettings
+        {
+            get { return minutesSettings; }
+            set
+            {
+                if (value.All(char.IsDigit) && value != "")
+                {
+                    if (int.Parse(value) >= 0 && int.Parse(value) <= 59)
+                    {
+                        minutesSettings = value;
+                        
+                    }
+                }else
+                {
+                    minutesSettings = "";
+                }
+                NotifyPropertyChanged(nameof(MinutesSettings));
+            }
+        }
+
+        public string SecondsSettings
+        {
+            get { return secondsSettings; }
+            set
+            {
+                if (value.All(char.IsDigit) && value != "")
+                {
+                    if (int.Parse(value) >= 0 && int.Parse(value) <= 60)
+                    {
+                        secondsSettings = value;
+                    }
+                }
+                else
+                {
+                    secondsSettings = "";
+                }
+                NotifyPropertyChanged(nameof(SecondsSettings));
+            }
+        }
+
+        public bool AutoSaveEnabledSettings
+        {
+            get { return autoSaveEnabledSettings; }
+            set { 
+                
+                autoSaveEnabledSettings = value;
+                TextBoxEnabledSettings = !autoSaveEnabledSettings;
+                if(value)
+                {
+                    if(minutesSettings == null || minutesSettings == "")
+                    {
+                        MinutesSettings = "0";
+                    }
+                    if (secondsSettings == null || secondsSettings == "")
+                    {
+                        SecondsSettings = "1";
+                    }
+                    
+                }
+                else
+                {
+
+                }
+                NotifyPropertyChanged(nameof(AutoSaveEnabledSettings));
+            }
+        }
+
+        public bool TextBoxEnabledSettings
+        {
+            get { return textBoxEnabledSettings; }
+            set {
+                textBoxEnabledSettings = value; 
+                NotifyPropertyChanged(nameof(TextBoxEnabledSettings));
             }
         }
 
