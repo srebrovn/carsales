@@ -27,7 +27,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Resources\ResourceDict.xaml">
+    <Page Update="Resources\AddWindowResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\MainResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\MenuBarResourceDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UserControls\ListViewAds.xaml">

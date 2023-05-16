@@ -8,6 +8,13 @@
         mc:Ignorable="d"
         Title="AddAdWindow" Height="700" Width="500"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/AddWindowResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
   
     <Grid>
         <Grid.RowDefinitions>
@@ -19,22 +26,19 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="Direct-Sale" Grid.ColumnSpan="2" Style="{StaticResource MainLabelAddWindow}"/>
+            <Label Content="Direct-Sale" Grid.ColumnSpan="2" Style="{StaticResource MainLabel}"/>
             <StackPanel Grid.Column="0" Margin="5 40 5 5">
-                <Label Content="Brand:" Style="{StaticResource LabelAddWindow}" />
+                <Label Content="Brand:" />
                 <ComboBox x:Name="cmbBrands"
                           ItemsSource="{Binding Brands}"
                           SelectedItem="{Binding BrandAdd}"/>
 
-                <Label Content="Model:"
-                       Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Model:"/>
                 <TextBox x:Name="tbModel"
                          Text="{Binding ModelAdd, UpdateSourceTrigger=LostFocus}"
-                         Style="{StaticResource TextBoxAddWindow}"
                          MaxLength="55"/>
 
-                <Label Content="Production Year:"
-                       Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Production Year:"/>
                 <ComboBox x:Name="cmbYear"
                           ItemsSource="{Binding Years}"
                           SelectedItem="{Binding YearAdd, UpdateSourceTrigger=PropertyChanged}"/>
@@ -53,14 +57,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Margin="5 0 0 0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" >
-                <Label Content="Mileage:"
-                    Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Mileage:"/>
                 <TextBox x:Name="tbMileage"
                         Text="{Binding MileageAdd, UpdateSourceTrigger=LostFocus}"
-                        Style="{StaticResource TextBoxAddWindow}"
                         MaxLength="7"/>
-                <Label Content="Fuel:"
-                    Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Fuel:"/>
                 <ComboBox x:Name="cmbFuel"
                          Text="{Binding FuelAdd}"
                          SelectedItem="{Binding FuelAdd, UpdateSourceTrigger=LostFocus}"
@@ -71,16 +72,13 @@
                     <ComboBoxItem Content="Hybrid (Diesel/Electric)"/>
                     <ComboBoxItem Content="Electric"/>
                 </ComboBox>
-                <Label Content="Capacity (cc):"
-                       Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Capacity (cc):"/>
                 <TextBox x:Name="tbCapacity"
                         Text="{Binding CapacityAdd, UpdateSourceTrigger=LostFocus}"
-                        Style="{StaticResource TextBoxAddWindow}"
                         MaxLength="5"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="0" >
-                <Label Content="Transmission:"
-                   Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Transmission:"/>
                 <ComboBox x:Name="cmbTransmission"
                         Text="{Binding TransmissionAdd}"
                         SelectedItem="{Binding TransmissionAdd, UpdateSourceTrigger=LostFocus}"
@@ -88,22 +86,18 @@
                     <ComboBoxItem Content="Automatic"/>
                     <ComboBoxItem Content="Manual"/>
                 </ComboBox>
-                <Label Content="Power (PS):"
-                   Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Power (PS):"/>
                 <TextBox x:Name="tbPower"
                         Text="{Binding PowerAdd, UpdateSourceTrigger=LostFocus}"                      
-                        Style="{StaticResource TextBoxAddWindow}"
                         MaxLength="4"/>
-                <Label Content="Price:"
-                   Style="{StaticResource LabelAddWindow}"/>
+                <Label Content="Price:"/>
                 <TextBox x:Name="tbPrice"
                         Text="{Binding PriceAdd, UpdateSourceTrigger=LostFocus}"
-                        Style="{StaticResource TextBoxAddWindow}"
                         MaxLength="8"/>
             </StackPanel>
 
-            <Label  Grid.Column="0" Grid.Row="1"  Content="Description:" Style="{StaticResource LabelAddWindow}" Margin="5 5 0 0"/>
-            <TextBox  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DescriptionAdd}" Style="{StaticResource DescriptionTextBoxAddWindow}"/>
+            <Label  Grid.Column="0" Grid.Row="1"  Content="Description:" Margin="5 5 0 0"/>
+            <TextBox  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DescriptionAdd}" Style="{StaticResource DescriptionLabel}"/>
             <Button Grid.Column="0" Grid.Row="1" Content="{Binding AddEditBtn}" Command="{Binding AddEditAdCommand}" Style="{StaticResource Button1}" IsEnabled="{Binding CanCreate}"  Height="30" Margin="10 0 25 25" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>

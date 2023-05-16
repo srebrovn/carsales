@@ -6,29 +6,38 @@
              xmlns:local="clr-namespace:CarSales.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/MenuBarResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Style="{StaticResource MenuBarGrid}">
+        <Grid Grid.Row="0">
             <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Verdana" FontSize="24">
                 Avto.net
             </Label>
         </Grid>
-        <Menu Grid.Row="1" Style="{StaticResource MenuBarMenu}">
+        <Menu Grid.Row="1" >
             <MenuItem Header="File" FontSize="16">
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Import XML" Command="{Binding OpenXMLFileDialogCommand}"/>
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Export XML" Command="{Binding SaveXMLFileDialogCommand}"/>
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Exit"/>
+                <MenuItem Header="Import XML" Command="{Binding OpenXMLFileDialogCommand}"/>
+                <MenuItem Header="Export XML" Command="{Binding SaveXMLFileDialogCommand}"/>
+                <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Ads" FontSize="16">
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Settings" Command="{Binding OpenSettingsWindowCommand}"/>
+                <MenuItem Header="Settings" Command="{Binding OpenSettingsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="Tools" FontSize="16">
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Add" Command="{Binding OpenAddWindowCommand}"/>
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Delete" Command="{Binding DeleteAdCommand}"/>
-                <MenuItem Style="{StaticResource MenuItem1}" Header="Edit" Command="{Binding OpenEditWindowCommand}"/>
+                <MenuItem Header="Add" Command="{Binding OpenAddWindowCommand}"/>
+                <MenuItem Header="Delete" Command="{Binding DeleteAdCommand}"/>
+                <MenuItem Header="Edit" Command="{Binding OpenEditWindowCommand}"/>
             </MenuItem>
         </Menu>
     </Grid>

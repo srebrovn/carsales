@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:CarSales"
              StartupUri="View/Windows/MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="Resources/ResourceDict.xaml"/>
+        <ResourceDictionary Source="Resources/MainResourceDictionary.xaml"/>
     </Application.Resources>
 </Application>

@@ -5,7 +5,9 @@ C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.dll
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\bin\Debug\net6.0-windows\CarSales.pdb
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\CarSales.csproj.AssemblyReference.cache
-C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\Resources\ResourceDict.baml
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\Resources\AddWindowResourceDictionary.baml
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\Resources\MainResourceDictionary.baml
+C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\Resources\MenuBarResourceDictionary.baml
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\ListViewAds.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\MenuBar.g.cs
 C:\Users\nikol\Desktop\Fax\Letnik III\Semester2\ICR\carsales\CarSales\obj\Debug\net6.0-windows\View\UserControls\SearchBox.g.cs
