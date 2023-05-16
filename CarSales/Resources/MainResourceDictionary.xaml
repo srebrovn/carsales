@@ -28,8 +28,8 @@
                     <Border Name="border" 
                         BorderThickness="1"
                         Padding="4,2" 
-                        BorderBrush="DarkGray" 
-                        CornerRadius="3" 
+                        BorderBrush="Black" 
+                        CornerRadius="2" 
                         Background="{TemplateBinding Background}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
@@ -44,7 +44,7 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                    To="#072F57" Duration="0:0:0.3"/>
+                                    To="#072F57" Duration="0:0:0.2"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
@@ -52,40 +52,11 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                    To="#F47A20" Duration="0:0:0.3"/>
+                                    To="#F47A20" Duration="0:0:0.2"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="`" TargetType="Button">
-        <Setter Property="Background" Value="#F47A20"/>
-        <Setter Property="Foreground" Value="GhostWhite"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Medium"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand"/>
-            </Trigger>
-            <EventTrigger RoutedEvent="Button.MouseEnter">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                    To="#072F57" Duration="0:0:0.3"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="Button.MouseLeave">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                    To="#F47A20" Duration="0:0:0.3"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </Style.Triggers>
-        
-    </Style>
-    
 </ResourceDictionary>
