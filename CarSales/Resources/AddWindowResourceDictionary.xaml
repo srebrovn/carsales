@@ -9,6 +9,11 @@
         <Setter Property="IsEditable" Value="False"/>
         <Setter Property="MaxDropDownHeight" Value="150"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style TargetType="TextBox">
         <Setter Property="Height" Value="25"/>

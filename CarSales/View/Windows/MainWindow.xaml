@@ -8,6 +8,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Name="mainWindow" MinWidth="1000"
         MinHeight="600" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/MainResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>

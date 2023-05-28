@@ -496,7 +496,7 @@ namespace CarSales.ViewModels
                     {
                         MinutesSettings = "0";
                     }
-                    if (secondsSettings == null || secondsSettings == "")
+                    if (secondsSettings == null || secondsSettings == "" || secondsSettings == "0")
                     {
                         SecondsSettings = "1";
                     }
